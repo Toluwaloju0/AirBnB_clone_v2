@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from datetime import datetime
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,6 +116,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        from models import storage
         if not args:
             print("** class name missing **")
             return
@@ -123,6 +125,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
+        # create the instance
+        new_instance = HBNBCommand.classes[args[0]]()
+
+        # create the dictionary to update the instance
         create_kwargs = {}
         for a in range(1, len(args)):
             param = args[a]
@@ -138,8 +144,11 @@ class HBNBCommand(cmd.Cmd):
             finally:
                 create_kwargs[param[0]] = param_value
 
-        new_instance = HBNBCommand.classes[args[0]](**create_kwargs)
-        storage.save()
+        # update the class dict if there are keywords
+        if len(create_kwargs) > 0:
+            new_instance.__dict__.update(create_kwargs)
+
+        new_instance.save()
         print(new_instance.id)
         storage.save()
 
