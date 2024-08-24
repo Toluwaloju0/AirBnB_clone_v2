@@ -127,12 +127,17 @@ class HBNBCommand(cmd.Cmd):
         for a in range(1, len(args)):
             param = args[a]
             param = param.split("=")
-            print(param)
             param_value = param[1].replace('_', ' ').replace('"', "")
-            param_value = str(param_value)
-            create_kwargs[param[0]] = param_value
+            try:
+                param_value = int(param_value)
+            except ValueError:
+                try:
+                    param_value = float(param_value)
+                except ValueError:
+                    pass
+            finally:
+                create_kwargs[param[0]] = param_value
 
-        print(create_kwargs)
         new_instance = HBNBCommand.classes[args[0]](**create_kwargs)
         storage.save()
         print(new_instance.id)
