@@ -53,7 +53,6 @@ class DBStorage():
                 for obj in DBclass:
                     key = obj.__class__.__name__ + '.' + obj.id
                     DBdict[key] = obj
-        print(DBdict)
         return DBdict
 
     def new(self, obj):
