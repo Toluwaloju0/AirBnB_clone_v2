@@ -51,8 +51,9 @@ class DBStorage():
             for key, cls in classes_dict.items():
                 DBclass = DBStorage.__session.query(cls).all()
                 for obj in DBclass:
-                    key = obj.__class__.__name___ + '.' + obj.id
+                    key = obj.__class__.__name__ + '.' + obj.id
                     DBdict[key] = obj
+        print(DBdict)
         return DBdict
 
     def new(self, obj):
