@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
-import sys
+from datetime import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -10,7 +10,8 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from datetime import datetime
+from os import getenv
+import sys
 
 
 class HBNBCommand(cmd.Cmd):
@@ -232,7 +233,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            if getenv('HBNB_TYPE_STORAGE') == 'db':
+                storage_dict = storage.all(args)
+            else:
+                storage_dict = storage._FileStorage__objects
+            for k, v in storage_dict.items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:

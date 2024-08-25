@@ -34,15 +34,21 @@ class DBStorage():
         from models.user import User
 
         DBdict = {}
-        Classes = [User, State, City, Amenity, Place, Review]
-        DBStorage.__session = Session(bind=engine)
+        classes_dict = {
+            'User': User, 'State': State,
+            'City': City, 'Amenity': Amenity,
+            'Place': Place, 'Review':Review
+        }
+        DBStorage.__session = Session(bind=DBStorage.__engine)
         if cls:
+            if type(cls) is str:
+                cls = classes_dict[cls]
             DBclass = DBStorage.__session.query(cls).all()
             for obj in DBclass:
                 key = obj.__class__.__name__ + '.' + obj.id
                 DBdict[key] = obj
         else:
-            for cls in Classes:
+            for key, cls in classes_dict.items():
                 DBclass = DBStorage.__session.query(cls).all()
                 for obj in DBclass:
                     key = obj.__class__.__name___ + '.' + obj.id
