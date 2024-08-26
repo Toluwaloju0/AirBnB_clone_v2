@@ -14,6 +14,7 @@ def do_deploy(archive_path):
     env.hosts = ['54.152.6.186', '35.153.51.170']
     try:
         with open(archive_path, 'r') as a:
+            pass
 
     except FileNotFoundError:
         return False
