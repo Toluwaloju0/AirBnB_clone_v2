@@ -19,14 +19,17 @@ def do_deploy(archive_path):
     except FileNotFoundError:
         return False
 
-    put(archive_path, f"/tmp/{archive_path}")
     main_archive = archive_path.split('/')[1]
+    run(f"touch /tmp/{main_archive}")
+    put(archive_path, f"/tmp/{main_archive}")
     new_path = main_archive[:-4]
-    run(f"mkdir -p /data/web_static/releases/{new_path}")
+    run(f"mkdir -p /data/web_static/releases/{new_path}/")
     folder = f"/data/web_static/releases/{new_path}"
     # unpack the archive
-    unpack = run(f"tar -xzf /tmp/{main_archive} -C {folder}")
+    unpack = run(f"tar -xzf /tmp/{main_archive} -C {folder}/")
     run(f"rm /tmp/{main_archive}")
+    run(f"mv {folder}/web_static/* {folder}/")
+    run(f"rm -rf {folder}/web_static")
     run("rm -rf /data/web_static/current")
     run(f"ln -s /data/web_static/releases/{new_path} /data/web_static/current")
     print("New version deployed!")
