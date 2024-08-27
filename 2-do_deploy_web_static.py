@@ -30,7 +30,9 @@ def do_deploy(archive_path):
     run(f"rm /tmp/{main_archive}")
     run(f"mv {folder}/web_static/* {folder}/")
     run(f"rm -rf {folder}/web_static")
+    sym_dir = run("readlink /data/web_static/current")
     run("rm -rf /data/web_static/current")
+    run("rm -rf {}".format(sym_dir.stdout))
     run(f"ln -s /data/web_static/releases/{new_path} /data/web_static/current")
     print("New version deployed!")
     return True
