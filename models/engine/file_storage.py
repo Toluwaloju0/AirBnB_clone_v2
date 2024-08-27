@@ -62,3 +62,7 @@ class FileStorage:
             return
         key = obj.to_dict()['__class__'] + '.' + obj.id
         del FileStorage.__objects[key]
+
+    def close(self):
+        """A method to close the file"""
+        self.reload()
