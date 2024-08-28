@@ -1,0 +1,20 @@
+Challenges
+During the course of coding this webpage i have been able to deduce the following challenges
+The frontend would be very difficult to recreate.
+The webpage would need to be deployed.
+Getting resources would require scraping a lot of data from the web
+
+Collaboration
+This project was done solo but the following people have provided help along the way
+Kusimo Yusuf : This is a peer who has helped me to see how efficient database storage is at the moment
+Project Update
+I have created tables for the following classes:
+User
+Resource
+Badge
+Skills
+Progress
+Progress
+This wee i made a progress of 5 on a scale of 1 - 10. It is slow and this rating is due to the fact that i am trying to clear up my deliverables.
+But before the end of 2 weeks the website would be fully active
+
